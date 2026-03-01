@@ -12,7 +12,7 @@ const Header = () => {
             border-b bg-background/95 backdrop-blur
             w-full flex py-2.5 px-5 justify-between"
     >
-      <div className="flex align-items gap-x-2">
+      <div className="flex items-center gap-x-2">
         <Link
           href={homePath()}
           className={buttonVariants({ variant: "ghost" })}
@@ -21,7 +21,7 @@ const Header = () => {
           <h1 className="text-lg font-semibold">TicketBounty</h1>
         </Link>
       </div>
-      <div className="flex align-items gap-x-2">
+      <div className="flex items-center gap-x-2">
         <ThemeSwitcher />
         <Link
           href={ticketsPath()}
