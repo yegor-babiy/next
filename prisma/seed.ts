@@ -12,17 +12,23 @@ export const tickets = [
   {
     title: "First Ticket",
     content: "This is the first ticket from the database.",
-    status: "DONE" as const
+    status: "DONE" as const,
+    bounty: 499, // $4.99
+    deadline: new Date().toISOString().split("T")[0] // Today's date in YYYY-MM-DD format
   },
   {
     title: "Second Ticket",
     content: "This is the second ticket from the database.",
-    status: "OPEN" as const
+    status: "OPEN" as const,
+    bounty: 399, // $3.99
+    deadline: new Date().toISOString().split("T")[0] // Today's date in YYYY-MM-DD format
   },
   {
     title: "Third Ticket",
     content: "This is the third ticket from the database.",
-    status: "IN_PROGRESS" as const
+    status: "IN_PROGRESS" as const,
+    bounty: 599, // $5.99
+    deadline: new Date().toISOString().split("T")[0] // Today's date in YYYY-MM-DD format
   }
 ];
 
