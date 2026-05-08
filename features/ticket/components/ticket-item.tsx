@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import {
+  LucideMoreVertical,
   LucidePencil,
-  LucideSquareArrowOutUpRight,
-  LucideTrash
+  LucideSquareArrowOutUpRight
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -16,8 +16,8 @@ import {
 import { Ticket } from "@/lib/generated/prisma/client";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
-import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../constants";
+import { TicketMoreMenu } from "./ticket-more-menu";
 
 type TicketItemProps = {
   ticket: Ticket;
@@ -41,12 +41,34 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     </Button>
   );
 
-  const deleteButton = (
-    <form action={deleteTicket.bind(null, ticket.id)}>
-      <Button variant="outline" size="icon">
-        <LucideTrash className="w-4 h-4" />
-      </Button>
-    </form>
+  // const deleteButton = (
+  //   <form action={deleteTicket.bind(null, ticket.id)}>
+  //     <Button variant="outline" size="icon">
+  //       <LucideTrash className="w-4 h-4" />
+  //     </Button>
+  //   </form>
+  // );
+
+  // const deleteButton = (
+  //   <ConfirmDialog
+  //     action={deleteTicket.bind(null, ticket.id)}
+  //     trigger={
+  //       <Button variant="outline" size="icon">
+  //         <LucideTrash className="w-4 h-4" />
+  //       </Button>
+  //     }
+  //   />
+  // );
+
+  const moreMenu = (
+    <TicketMoreMenu
+      ticket={ticket}
+      trigger={
+        <Button variant="outline" size="icon">
+          <LucideMoreVertical className="w-4 h-4" />
+        </Button>
+      }
+    />
   );
 
   return (
@@ -84,7 +106,8 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         {isDetail ? (
           <>
             {editButton}
-            {deleteButton}
+            {/* {deleteButton} */}
+            {moreMenu}
           </>
         ) : (
           <>
