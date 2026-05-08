@@ -2,7 +2,7 @@
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 import { LucideTrash } from "lucide-react";
 import { toast } from "sonner";
-import { ConfirmDialog, useConfirmDialog } from "@/components/confirm-dialog";
+import { useConfirmDialog } from "@/components/confirm-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
