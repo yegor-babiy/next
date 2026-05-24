@@ -49,10 +49,12 @@ export const fromErrorToActionState = (
 
 export const toActionState = (
   status: NonNullable<ActionState>["status"],
-  message: string
+  message: string,
+  formData?: FormData
 ): ActionState => ({
   status,
   message,
+  payload: formData,
   fieldErrors: {},
   timestamp: Date.now()
 });
