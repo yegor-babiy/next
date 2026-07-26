@@ -13,6 +13,8 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
+import { getAuth } from "@/features/auth/queries/get-auth";
+import { isOwner } from "@/features/auth/utils/is-owner";
 import { Prisma } from "@/lib/generated/prisma/client";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
@@ -30,7 +32,10 @@ type TicketItemProps = {
   isDetail?: boolean;
 };
 
-const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
+const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
+  const { user } = await getAuth();
+  const isTicketOwner = isOwner(user, ticket);
+
   const detailButton = (
     <Button asChild variant="outline" size="icon">
       <Link prefetch href={ticketPath(ticket.id)}>
@@ -39,13 +44,13 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
     </Button>
   );
 
-  const editButton = (
+  const editButton = isTicketOwner ? (
     <Button variant="outline" size="icon" asChild>
       <Link prefetch href={ticketEditPath(ticket.id)}>
         <LucidePencil className="w-4 h-4" />
       </Link>
     </Button>
-  );
+  ) : null;
 
   // const deleteButton = (
   //   <form action={deleteTicket.bind(null, ticket.id)}>
@@ -66,7 +71,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
   //   />
   // );
 
-  const moreMenu = (
+  const moreMenu = isTicketOwner ? (
     <TicketMoreMenu
       ticket={ticket}
       trigger={
@@ -75,7 +80,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
         </Button>
       }
     />
-  );
+  ) : null;
 
   return (
     <div
