@@ -5,4 +5,5 @@ export type NavItem = {
   href: Route;
   separator?: boolean;
   icon: React.ReactElement<{ className?: string }>;
+  matches: (currentPath: string) => boolean;
 };

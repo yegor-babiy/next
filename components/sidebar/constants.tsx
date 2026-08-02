@@ -6,18 +6,21 @@ export const navItems: NavItem[] = [
   {
     title: "All Tickets",
     icon: <LucideLibrary />,
-    href: homePath()
+    href: homePath(),
+    matches: (currentPath: string) => homePath() === currentPath
   },
   {
     title: "My Tickets",
     icon: <LucideBook />,
-    href: ticketsPath()
+    href: ticketsPath(),
+    matches: (currentPath: string) => ticketsPath() === currentPath
   },
   {
     separator: true,
     title: "Account",
     icon: <LucideCircleUser />,
-    href: accountProfilePath()
+    href: accountProfilePath(),
+    matches: (currentPath: string) => /account\/.*/.test(currentPath)
   }
 ];
 

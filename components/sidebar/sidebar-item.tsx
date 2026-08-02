@@ -14,7 +14,7 @@ type SidebarItemProps = {
 
 export const SidebarItem = ({ isOpen, navItem }: SidebarItemProps) => {
   const path = usePathname();
-  const isActive = path === navItem.href;
+  const isActive = navItem.matches(path);
 
   return (
     <>
