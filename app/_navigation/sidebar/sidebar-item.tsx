@@ -2,8 +2,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cloneElement } from "react";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "../ui/button";
-import { Separator } from "../ui/separator";
+import { buttonVariants } from "../../../components/ui/button";
+import { Separator } from "../../../components/ui/separator";
 import { closedClassName } from "./constants";
 import { NavItem } from "./types";
 
