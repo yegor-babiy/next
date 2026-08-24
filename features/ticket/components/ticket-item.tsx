@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/card";
 import { getAuth } from "@/features/auth/queries/get-auth";
 import { isOwner } from "@/features/auth/utils/is-owner";
-import { Commnets } from "@/features/comment/components/comments";
+import { Comments } from "@/features/comment/components/comments";
+import { CommentWithMetadata } from "@/features/comment/types";
 import { Prisma } from "@/lib/generated/prisma/client";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
@@ -31,9 +32,10 @@ type TicketItemProps = {
     };
   }>;
   isDetail?: boolean;
+  comments?: CommentWithMetadata[];
 };
 
-const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
+const TicketItem = async ({ ticket, comments, isDetail }: TicketItemProps) => {
   const { user } = await getAuth();
   const isTicketOwner = isOwner(user, ticket);
 
@@ -132,7 +134,7 @@ const TicketItem = async ({ ticket, isDetail }: TicketItemProps) => {
           )}
         </div>
       </div>
-      {isDetail ? <Commnets ticketId={ticket.id} /> : null}
+      {isDetail ? <Comments ticketId={ticket.id} comments={comments} /> : null}
     </div>
   );
 };
