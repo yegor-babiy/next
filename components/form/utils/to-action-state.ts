@@ -1,12 +1,13 @@
 import { flattenError, ZodError } from "zod";
 
-export type ActionState =
+export type ActionState<T = any> =
   | {
       status?: "SUCCESS" | "ERROR";
       message: string;
       payload?: FormData;
       fieldErrors?: Record<string, string[]>;
       timestamp: number;
+      data?: T;
     }
   | undefined;
 
@@ -50,11 +51,13 @@ export const fromErrorToActionState = (
 export const toActionState = (
   status: NonNullable<ActionState>["status"],
   message: string,
-  formData?: FormData
+  formData?: FormData,
+  data?: unknown
 ): ActionState => ({
   status,
   message,
   payload: formData,
   fieldErrors: {},
-  timestamp: Date.now()
+  timestamp: Date.now(),
+  data
 });

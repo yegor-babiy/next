@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getCookieByKey } from "@/actions/cookies";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Separator } from "@/components/ui/separator";
 import { getComments } from "@/features/comment/queries/get-comments";
@@ -15,10 +16,12 @@ const TicketPage = async ({ params }: TicketPageProps) => {
   const ticketPromise = getTicket(ticketId);
   const commentsPromise = getComments(ticketId);
 
-  const [ticket, comments] = await Promise.all([
+  const [ticket, paginatedComments] = await Promise.all([
     ticketPromise,
     commentsPromise
   ]);
+
+  const editingCommentId = await getCookieByKey("editingComment");
 
   if (!ticket) {
     notFound();
@@ -34,7 +37,12 @@ const TicketPage = async ({ params }: TicketPageProps) => {
       />
       <Separator />
       <div className="flex justify-center animate-fade-from-top">
-        <TicketItem ticket={ticket} comments={comments} isDetail />
+        <TicketItem
+          ticket={ticket}
+          paginatedComments={paginatedComments}
+          editingCommentId={editingCommentId}
+          isDetail
+        />
       </div>
     </div>
   );

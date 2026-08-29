@@ -23,6 +23,7 @@ export const upsertComment = async (
   formData: FormData
 ) => {
   const { user } = await getAuthOrRedirect();
+  let result;
 
   try {
     if (id) {
@@ -42,10 +43,13 @@ export const upsertComment = async (
       ...data
     };
 
-    await prisma.comment.upsert({
+    result = await prisma.comment.upsert({
       where: { id: id || "" },
       update: dbData,
-      create: dbData
+      create: dbData,
+      include: {
+        user: true
+      }
     });
   } catch (error) {
     return fromErrorToActionState(error);
@@ -53,5 +57,10 @@ export const upsertComment = async (
 
   revalidatePath(ticketPath(ticketId));
 
-  return toActionState("SUCCESS", id ? "Comment updated" : "Comment created");
+  return toActionState(
+    "SUCCESS",
+    id ? "Comment updated" : "Comment created",
+    undefined,
+    { ...result, isOwner: true }
+  );
 };

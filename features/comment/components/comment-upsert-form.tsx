@@ -5,26 +5,35 @@ import { consumeCookieByKey } from "@/actions/cookies";
 import { FieldError } from "@/components/form/field-error";
 import { Form } from "@/components/form/form";
 import { SubmitButton } from "@/components/form/submit-button";
-import { EMPTY_ACTION_STATE } from "@/components/form/utils/to-action-state";
+import {
+  ActionState,
+  EMPTY_ACTION_STATE
+} from "@/components/form/utils/to-action-state";
 import { Textarea } from "@/components/ui/textarea";
 import { Comment } from "@/lib/generated/prisma/client";
 import { upsertComment } from "../actions/upsert-comment";
+import { CommentWithMetadata } from "../types";
 
 type CommentUpsertFormProps = {
   ticketId: string;
   comment?: Comment;
+  onUpsertComment?: (comment: CommentWithMetadata | undefined) => void;
 };
 
 export const CommentUpsertForm = ({
   ticketId,
-  comment
+  comment,
+  onUpsertComment
 }: CommentUpsertFormProps) => {
   const [actionState, action] = useActionState(
     upsertComment.bind(null, comment?.id, ticketId),
     EMPTY_ACTION_STATE
   );
 
-  const handleSuccess = async () => {
+  const handleSuccess = async (
+    actionState: ActionState<CommentWithMetadata | undefined>
+  ) => {
+    onUpsertComment?.(actionState?.data);
     await consumeCookieByKey("editingComment");
   };
 
