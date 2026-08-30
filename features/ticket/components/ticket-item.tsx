@@ -5,6 +5,7 @@ import {
   LucideSquareArrowOutUpRight
 } from "lucide-react";
 import Link from "next/link";
+import { PaginagedData } from "@/components/pagination/types";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,26 +18,17 @@ import { getAuth } from "@/features/auth/queries/get-auth";
 import { isOwner } from "@/features/auth/utils/is-owner";
 import { Comments } from "@/features/comment/components/comments";
 import { CommentWithMetadata } from "@/features/comment/types";
-import { Prisma } from "@/lib/generated/prisma/client";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
 import { TICKET_ICONS } from "../constants";
+import { TicketWithMetadata } from "../types";
 import { TicketMoreMenu } from "./ticket-more-menu";
 
 type TicketItemProps = {
-  ticket: Prisma.TicketGetPayload<{
-    include: {
-      user: {
-        select: { username: true };
-      };
-    };
-  }>;
+  ticket: TicketWithMetadata;
   isDetail?: boolean;
   editingCommentId?: string | null;
-  paginatedComments?: {
-    list: CommentWithMetadata[];
-    metadata: { count: number; hasNextPage: boolean };
-  };
+  paginatedComments?: PaginagedData<CommentWithMetadata>;
 };
 
 const TicketItem = async ({
