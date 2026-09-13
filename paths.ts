@@ -18,6 +18,9 @@ export const signOutPath = (): Route => "/sign-out" as Route;
 
 export const passwordForgotPath = (): Route => "/password-forgot" as Route;
 
+export const passwordResetPath = (token: string): Route =>
+  `/password-reset/${token}` as Route;
+
 export const accountProfilePath = (): Route => "/account/profile" as Route;
 
 export const accountPasswordPath = (): Route => "/account/password" as Route;
